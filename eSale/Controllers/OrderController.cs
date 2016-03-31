@@ -33,7 +33,8 @@ namespace eSale.Controllers
         [HttpPost()]
         public ActionResult InsertOrder(Models.Order Order)
         {
-
+            Models.OrderService orderService = new Models.OrderService();
+            orderService.InsertOrder(Order);
             return View("Index");
         }
     }

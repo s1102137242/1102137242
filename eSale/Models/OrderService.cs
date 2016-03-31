@@ -10,7 +10,7 @@ namespace eSale.Models
         /// <summary>
         /// 新增 
         /// </summary>
-        public void InsertOrder()
+        public void InsertOrder(Models.Order Order)
         {
 
         }
@@ -18,7 +18,7 @@ namespace eSale.Models
         /// <summary>
         /// 刪除
         /// </summary>
-        public void DeleteOrderById()
+        public void DeleteOrderById(string Id)
         {
 
         }
@@ -26,7 +26,7 @@ namespace eSale.Models
         /// <summary>
         /// 更新
         /// </summary>
-        public void UpdateOrder()
+        public void UpdateOrder(Models.Order Order)
         {
 
         }
