@@ -1,8 +1,109 @@
-﻿
+﻿@model eSale.Models.OrderSearchArg
+
 @{
-    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
 }
+<!DOCTYPE html>
 
-<h2>Index</h2>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>SelectIndex</title>
+    <script type="text/javascript">
 
-@ViewBag.CustomerID
+
+    $(".btnDelete").click(function (e) {
+
+        var tr = $(this).closest('tr')
+        $.ajax({
+            type: "POST",
+            url: "/Order/DeleteOrder",
+            data: "OrderID=" + $(this).next().val(),
+            dataType: "json",
+            success: function (response) {
+                $(tr).remove();
+            }
+        });
+        return false;
+    });
+
+    </script>
+</head>
+<body>
+
+    @using (Html.BeginForm("Index", "Employees", FormMethod.Post, new { id = "Form1" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+        <div><h3>訂單查詢</h3></div>
+        <div>
+            <table class="table" style="width:75%">
+                <tr>
+                    <td>訂單編號</td>
+                    <td colspan="3">@Html.TextBoxFor(Models => Models.OrderID)</td>
+                </tr>
+                <tr>
+                    <td>客戶名稱</td>
+                    <td colspan="3">@Html.TextBoxFor(Models => Models.CompanyName)</td>
+                </tr>
+                <tr>
+                    <td>負責員工</td>
+                    <td colspan="3">
+                        @Html.DropDownListFor(Models => Models.EmployeeID, (List<SelectListItem>)ViewData["EmpData"])
+                    </td>
+                </tr>
+                <tr>
+                    <td>出貨公司</td>
+                    <td colspan="3">@Html.DropDownListFor(Models => Models.ShipperID, (List<SelectListItem>)ViewData["ShippersData"])</td>
+                </tr>
+                <tr>
+                    <td>訂購日期</td>
+                    <td colspan="3">@Html.TextBoxFor(Models => Models.OrderDate, new { @type = "date" })</td>
+                    <td>出貨日期</td>
+                    <td colspan="3">@Html.TextBoxFor(Models => Models.ShippedDate, new { @type = "date" })</td>
+                </tr>
+                <tr>
+                    <td>需要日期</td>
+                    <td colspan="3">@Html.TextBoxFor(Models => Models.RequiredDate, new { @type = "date" })</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td colspan="3">
+                        <input type="submit" value="查詢" />
+                        <input type="reset" value="清除" />
+                        @Html.ActionLink("新增訂單", "../Customers/InsertIndex")
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div><h3>查詢結果</h3></div>
+        <div>
+            @if (ViewBag.SelectData != null)
+            {
+                <table class="table" style="width:75%">
+                    <tr>
+                        <td colspan="3">訂單編號</td>
+                        <td colspan="3">客戶名稱</td>
+                        <td colspan="3">訂購日期</td>
+                        <td colspan="3">發貨日期</td>
+                    </tr>
+                    @foreach (var item in (List<eSale.Models.Order>)ViewBag.SelectData)
+                    {
+                        <tr id='@item.OrderID'>
+                            <td colspan="3">@item.OrderID</td>
+                            <td colspan="3">@item.CompanyName</td>
+                            <td colspan="3">@item.OrderDate</td>
+                            <td colspan="3">@item.ShippedDate</td>
+                            <td>
+                                <a class="btnDelete" href="#">刪除</a>
+                                <input class="hidOrderId" type="hidden" value='@item.OrderID' />
+                            </td>
+                        </tr>
+                    }
+                </table>
+            }
+        </div>
+    }
+</body>
+
+</html>
