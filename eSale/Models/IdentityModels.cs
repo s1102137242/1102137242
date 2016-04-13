@@ -30,6 +30,6 @@ namespace eSale.Models
             return new ApplicationDbContext();
         }
 
-        public System.Data.Entity.DbSet<eSale.Models.Order> Orders { get; set; }
+        public System.Data.Entity.DbSet<eSale.Models.Orders> Orders { get; set; }
     }
 }
