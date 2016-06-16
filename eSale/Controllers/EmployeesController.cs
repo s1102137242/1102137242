@@ -62,10 +62,11 @@ namespace eSale.Controllers
 
         }
 
+
         [HttpPost()]
         public JsonResult DeleteOrder(string OrderID)
         {
-
+            
             try
             {
                 OrdersService OrdersService = new OrdersService();
@@ -77,5 +78,8 @@ namespace eSale.Controllers
                 return this.Json(false);
             }
         }
+
+
+
     }
 }

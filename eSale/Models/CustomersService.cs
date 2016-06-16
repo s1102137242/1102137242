@@ -14,7 +14,7 @@ namespace eSale.Models
             return System.Configuration.ConfigurationManager.ConnectionStrings["DBConnectionString"].ConnectionString.ToString();
         }
         /// <summary>
-        /// 
+        /// get Customer Name
         /// </summary>
         /// <returns></returns>
         public List<Customers> GetCustomerName()
