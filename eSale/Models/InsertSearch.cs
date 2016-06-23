@@ -16,7 +16,7 @@ namespace eSale.Models
         public InsertSearch()
         {
             var ods = new List<Models.OrderDetails>();
-            ods.Add(new OrderDetails() { ProductID = 58 });
+            ods.Add(new OrderDetails() { ProductID = 1 });
             this.OrderDetails = ods;
         }
 
@@ -47,6 +47,8 @@ namespace eSale.Models
         public string ShipAddress { get; set; }
 
         public string ShipName { get; set; }
+
+        public string OrderID { get; set; }
 
         public string ProductID { get; set; }
 

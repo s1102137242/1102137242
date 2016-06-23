@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace eSale.Models
 {
@@ -47,21 +48,22 @@ namespace eSale.Models
             return result;
         }
 
-        public Products GetProductUnitPrice(string ProductID)
+        
+        public List<Products> GetProductUnitPrice()
+
         {
             DataTable result = new DataTable();
-            string sql = @"SELECT UnitPrice FROM Production.Products WHERE ProductID = @ProductID";
+            string sql = @"SELECT UnitPrice FROM Production.Products";
 
             using (SqlConnection conn = new SqlConnection(this.GetconnectionStrings()))
             {
                 conn.Open();
-                SqlCommand command = new SqlCommand(sql, conn);
-                command.Parameters.Add(new SqlParameter("@ProductID", ProductID));
-                SqlDataAdapter sqlAdapter = new SqlDataAdapter(command);
+                SqlDataAdapter sqlAdapter = new SqlDataAdapter();
+                sqlAdapter.SelectCommand = new SqlCommand(sql, conn);
                 sqlAdapter.Fill(result);
                 conn.Close();
             }
-            return this.MapUnitPriceList(result).FirstOrDefault();
+            return this.MapUnitPriceList(result);
         }
 
         private List<Products> MapUnitPriceList(DataTable orderData)
